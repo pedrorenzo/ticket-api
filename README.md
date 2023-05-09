@@ -21,9 +21,9 @@ curl --location --request POST 'http://localhost:8081/tickets' \
     "status": "IN_PROGRESS"
 }'
 ```
-*companyId*: the ID of the company associated with the ticket (required).
-*description*: the description of the ticket (required).
-*status*: the status of the ticket (required).
+* *companyId*: the ID of the company associated with the ticket (required).
+* *description*: the description of the ticket (required).
+* *status*: the status of the ticket (required).
 
 #### Response
 ```json
@@ -34,7 +34,8 @@ curl --location --request POST 'http://localhost:8081/tickets' \
     "status": "IN_PROGRESS"
 }
 ```
-Returns 201 and a JSON object with the ID, company ID, description, and status of the created ticket. Returns 400 if any of the parameters in the request body are not provided.
+* Returns 201 and a JSON object with the ID, company ID, description, and status of the created ticket.
+* Returns 400 if any of the parameters in the request body are not provided.
 
 ### GET /companies/:companyId/tickets
 Get a list of all tickets associated with a company (from the requirements: As a support agent I want to see a list of all tickets of any customer/company).
@@ -43,7 +44,7 @@ Get a list of all tickets associated with a company (from the requirements: As a
 ```shell
 curl --location --request GET 'http://localhost:8081/companies/5/tickets'
 ```
-*companyId*: the ID of the company (required).
+* *companyId*: the ID of the company (required).
 
 #### Response
 ```json
@@ -68,18 +69,19 @@ curl --location --request GET 'http://localhost:8081/companies/5/tickets'
     ]
 }
 ```
-Returns 200 and a JSON object with the company ID and a list of tickets associated with it. Returns an empty list if the companyId is not found in the database (Please check project assumptions 1).
+* Returns 200 and a JSON object with the company ID and a list of tickets associated with it.
+* Returns an empty list if the companyId is not found in the database (Please check project assumptions).
 
 ### GET /tickets/:ticketId
 Get information about a specific ticket (from the requirements: As a support agent I want to see all the information about a ticket including all comments in a
-detail view). 
+detail view).
 
 #### Request
 ```shell
 curl --location --request GET 'http://localhost:8081/tickets/4?include=comments'
 ```
-*ticketId*: the ID of the ticket (required).
-*include*: an optional parameter to include comments in the response.
+* *ticketId*: the ID of the ticket (required).
+* *include*: an optional parameter to include comments in the response.
 
 #### Response
 ```json
@@ -107,7 +109,8 @@ curl --location --request GET 'http://localhost:8081/tickets/4?include=comments'
     ]
 }
 ```
-Returns 200 and a JSON object with information about the ticket, including any comments if the "include" parameter is present. Returns 404 if the ID is not found.
+* Returns 200 and a JSON object with information about the ticket, including any comments if the "include" parameter is present.
+* Returns 404 if the ID is not found.
 
 ### POST /tickets/:ticketId/comments
 Add a comment to a ticket (from the requirements: As a support agent I want to add comments to an existing ticket, so that I can ask the customer
@@ -122,9 +125,9 @@ curl --location --request POST 'http://localhost:8081/tickets/4/comments' \
     "authorId": 2
 }'
 ```
-*ticketId*: the ID of the ticket (required).
-*message*: the message (required).
-*authorId*: the id of the author (required).
+* *ticketId*: the ID of the ticket (required).
+* *message*: the message (required).
+* *authorId*: the id of the author (required).
 
 #### Response
 ```json
@@ -135,7 +138,8 @@ curl --location --request POST 'http://localhost:8081/tickets/4/comments' \
     "authorId": 2
 }
 ```
-Returns 201 and a JSON object with the ID, ticket ID, message, and author. Returns 400 if any of the parameters in the request body are not provided or 404 if the ID is not found.
+* Returns 201 and a JSON object with the ID, ticket ID, message, and author.
+* Returns 400 if any of the parameters in the request body are not provided or 404 if the ID is not found.
 
 ### PATCH /tickets/:ticketId/status
 Update the ticket status, with or without a comment (from the requirements: As a support agent I want to update the status of a ticket and add more information to it in a
@@ -153,14 +157,16 @@ curl --location --request PATCH 'http://localhost:8081/tickets/4/status' \
     }
 }'
 ```
-*ticketId*: the ID of the ticket (required).
-*status*: the status of the ticket (required).
-*comment*: the comment to be added.
-*comment.message*: the message (required if comment is present).
-*comment.authorId*: the id of the author (required if comment is present).
+* *ticketId*: the ID of the ticket (required).
+* *status*: the status of the ticket (required).
+* *comment*: the comment to be added.
+  * *comment.message*: the message (required if comment is present).
+  * *comment.authorId*: the id of the author (required if comment is present).
 
 #### Response
-Returns 204 if update was successfull, 400 if any required parameter in the request body are not provided or 404 if the ID is not found.
+* Returns 204 if update was successfull.
+* Returns 400 if any required parameter in the request body are not provided.
+* Returns 404 if the ID is not found.
 
 ## Technologies/frameworks used
 
@@ -193,6 +199,6 @@ To test your modifications using Docker containers, you will have to run, using 
 * In /ticket-api/docker folder: *docker-compose up -d mysqldb* - Now you have your MySQL database up and running!
 * In /ticket-api/ folder: *mvn clean install* (this command will also run all tests developed in the application)
 * Back to /ticket-api/docker folder:
-   * *docker build -t java-api .*
-   * *docker-compose build --no-cache*
-   * *docker-compose up*
+  * *docker build -t java-api .*
+  * *docker-compose build --no-cache*
+  * *docker-compose up*
